@@ -2,11 +2,32 @@ import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import CustomLayer from "./threeLayer";
-import CustomLayer1 from "./threeLayer1";
 import RenderMarker from "./render-marker";
 import LinePath from "./line";
-import customLayer2 from "./threeLayer2";
+import handleCustomLayer from "./three-model";
+
+const customLayers = [
+  {
+    url: "/models/eif1.gltf",
+    scale: [8, 8, 8],
+    mapPosition: [148.9824, -35.39817],
+    id: "eif",
+  },
+  {
+    url: "/models/towe1.gltf",
+    scale: [6, 6, 6],
+    mapPosition: [148.9818, -35.39707],
+    rotation: [0, 45, 0],
+    id: "tower",
+  },
+  {
+    url: "/models/text1.gltf",
+    scale: [20, 20, 20],
+    mapPosition: [148.9798, -35.39707],
+    rotation: [0, 45, 0],
+    id: "text",
+  },
+];
 
 const Map = () => {
   const [map, setMap] = useState(null);
@@ -20,8 +41,7 @@ const Map = () => {
 
     const map = new mapboxgl.Map({
       container: mapRef.current,
-      style:
-        /* "mapbox://styles/thxena/cl4vk8ze7000z15o0hhc3t6ra" */ "mapbox://styles/markkabierski/cl5pllom7000j14kf8hheb2au",
+      style: "mapbox://styles/markkabierski/cl5pllom7000j14kf8hheb2au",
       zoom: 18,
       center: [148.9819, -35.3981],
       pitch: 60,
@@ -32,9 +52,9 @@ const Map = () => {
       setMap(map);
       setMapLoaded(true);
 
-      map.addLayer(CustomLayer /*, "waterway-label"*/);
-      map.addLayer(CustomLayer1 /*, "waterway-label"*/);
-      map.addLayer(customLayer2);
+      customLayers.map((item = {}) => {
+        return map.addLayer(handleCustomLayer({ ...item }));
+      });
     });
 
     return () => {
