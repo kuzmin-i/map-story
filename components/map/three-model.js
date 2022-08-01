@@ -60,11 +60,12 @@ const handleCustomLayer = ({
 
       const directionalLight = new THREE.DirectionalLight(0xffffff);
       directionalLight.position.set(0, -70, 100).normalize();
+      directionalLight.intensity = 1.2
       this.scene.add(directionalLight);
 
       const directionalLight2 = new THREE.DirectionalLight(0xffffff);
       directionalLight2.position.set(0, 70, 100).normalize();
-      directionalLight2.intensity = 1;
+      directionalLight2.intensity = 1.8;
       this.scene.add(directionalLight2);
 
       const loader = new GLTFLoader();
@@ -79,8 +80,20 @@ const handleCustomLayer = ({
 
         gltf.scene.traverse((child) => {
           /*if (child.isMeshe)*/
+          const { name } = child;
+
+          console.log("child", child);
+
+          let color = 0x8f00ff;
+          if (name === "white") color = 0xffffff;
+          if (name === "grey") color = 0xb2b6bb;
+          if (name === "lightgreen") color = 0xa2e7a1;
+          if (name === "darkgreen") color = 0x729c6d;
+          if (name === "lightred") color = 0xe76f6f;
+          if (name === "darkred") color = 0xe7343a;
+
           child.material = new THREE.MeshStandardMaterial({
-            color: 0x8f00ff,
+            color: color,
             transparent: true,
             opacity: 0.6,
           });

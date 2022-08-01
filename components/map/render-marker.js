@@ -16,7 +16,7 @@ const RenderMarker = ({ map }) => {
           const markerElement = markerRef.current;
 
           new mapboxgl.Marker(markerElement, { offset: [0, -60] })
-            .setLngLat([148.98172, -35.39824])
+            .setLngLat([135.758949, 35.024473])
             .addTo(map);
         }
 
@@ -24,7 +24,7 @@ const RenderMarker = ({ map }) => {
           const markerElement = markerStartRef.current;
 
           new mapboxgl.Marker(markerElement, { offset: [0, -60] })
-            .setLngLat([148.97972, -35.39624])
+            .setLngLat([135.751996, 35.012765])
             .addTo(map);
         }
       };

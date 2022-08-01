@@ -36,8 +36,8 @@ const LinePath = ({ map }) => {
     } else {
       const realProgress = progress / speedFactor;
 
-      const xy0 = [148.98172, -35.39824];
-      const xy1 = [148.97972, -35.39624];
+      const xy1 = [135.758949, 35.024473];
+      const xy0 = [135.751996, 35.012765];
 
       const x = xy0[0] + (xy1[0] - xy0[0]) * (realProgress / 360);
       const y = xy0[1] + (xy1[1] - xy0[1]) * (realProgress / 360);
