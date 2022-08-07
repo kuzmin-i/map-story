@@ -75,6 +75,14 @@ const PrimaryBtn = styled.div`
   border-radius: 15px;
   background: #4a00e4;
   cursor: pointer;
+  box-shadow: 0 4px 10px -5px rgb(26 86 245 / 40%);
+
+  @media (max-width: 560px) {
+    &,
+    & * {
+      font-size: 14px !important;
+    }
+  }
 
   &&,
   & * {
