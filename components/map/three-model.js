@@ -60,7 +60,7 @@ const handleCustomLayer = ({
 
       const directionalLight = new THREE.DirectionalLight(0xffffff);
       directionalLight.position.set(0, -70, 100).normalize();
-      directionalLight.intensity = 1.2
+      directionalLight.intensity = 1.2;
       this.scene.add(directionalLight);
 
       const directionalLight2 = new THREE.DirectionalLight(0xffffff);
@@ -92,11 +92,44 @@ const handleCustomLayer = ({
           if (name === "lightred") color = 0xe76f6f;
           if (name === "darkred") color = 0xe7343a;
 
-          child.material = new THREE.MeshStandardMaterial({
+          var material = new THREE.ShaderMaterial({
+            uniforms: {
+              color1: {
+                value: new THREE.Color("white"),
+              },
+              color2: {
+                value: new THREE.Color(0x8f00ff),
+              },
+            },
+            vertexShader: `
+              varying vec2 vUv;
+          
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform vec3 color1;
+              uniform vec3 color2;
+            
+              varying vec2 vUv;
+              
+              void main() {
+                
+                gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+              }
+            `,
+            wireframe: false,
+            transparent: true,
+            opacity: .6
+          });
+
+          child.material = material; /*new THREE.MeshStandardMaterial({
             color: color,
             transparent: true,
             opacity: 0.6,
-          });
+          });*/
           /* */
         });
 

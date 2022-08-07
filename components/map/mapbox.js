@@ -179,7 +179,7 @@ const Map = () => {
         {map && mapLoaded && (
           <>
             {<RenderMarker map={map} />}
-            {/* <LinePath map={map} /> */}
+            {<LinePath map={map} /> }
           </>
         )}
       </div>

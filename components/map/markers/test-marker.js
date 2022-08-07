@@ -1,6 +1,19 @@
 import { motion } from "framer-motion";
+import styled from "styled-components";
 
-const Marker = ({ noAnimation }) => {
+const Label = styled(motion.div)`
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+  background: white;
+  border-radius: 20px;
+  padding: 2px 10px;
+  position: absolute;
+  left: ${({ left }) => (left ? left : `0px`)};
+  bottom: ${({ bottom }) => (bottom ? bottom : `0px`)};
+`;
+
+const Marker = ({ noAnimation, isMe }) => {
   return (
     <>
       <motion.div
@@ -72,8 +85,10 @@ const Marker = ({ noAnimation }) => {
             }}
             transition={{ repeat: Infinity, ease: "easeInOut", duration: 1.4 }}
             style={{
-              border: "5px solid black",
-              background: "white",
+              border: `10px solid ${isMe ? `#FF6813` : `black`}`,
+              background: isMe ? `url("/icons/1.jpg")` : "white",
+              backgroundSize: "120%",
+              backgroundPosition: "center",
               borderRadius: "35%",
             }}
           ></motion.div>
@@ -86,8 +101,22 @@ const Marker = ({ noAnimation }) => {
             xmlns="http://www.w3.org/2000/svg"
             style={{ position: "relative", top: "-2px" }}
           >
-            <path d="M133.5 216L0 0H267L133.5 216Z" fill="black" />
+            <path
+              d="M133.5 216L0 0H267L133.5 216Z"
+              fill={isMe ? `#FF6813` : "black"}
+            />
           </motion.svg>
+
+          {isMe && (
+            <>
+              <Label left={`0px`} bottom={`-30px`}>
+                YOU're
+              </Label>
+              <Label left={`30px`} bottom={`-53px`}>
+                HERE
+              </Label>
+            </>
+          )}
         </motion.div>
       </motion.div>
     </>
