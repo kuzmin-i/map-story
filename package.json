@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@react-three/fiber": "^8.2.0",
     "antd": "^4.21.6",
     "framer-motion": "^6.5.1",
