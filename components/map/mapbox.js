@@ -78,6 +78,10 @@ const PrimaryBtn = styled.div`
   box-shadow: 0 4px 10px -5px rgb(26 86 245 / 40%);
 
   @media (max-width: 560px) {
+    & {
+      padding: 15px 20px !important;
+    }
+
     &,
     & * {
       font-size: 14px !important;
@@ -98,8 +102,10 @@ const PrimaryBtn = styled.div`
 `;
 
 const IconPlayPause = styled.div`
-  width: 20px;
-  height: 20px;
+  min-width: 14px;
+  max-width: 14px;
+  width: 14px;
+  height: 14px;
 
   &[data-type="play"] {
     background: url("/icons/play.svg");
@@ -262,12 +268,12 @@ const Map = () => {
           {!animationOn ? (
             <>
               <IconPlayPause data-type="play" />
-              <div>Анимировать маршрут</div>
+              <div style={{ minWidth: "max-content" }}>Анимировать маршрут</div>
             </>
           ) : (
             <>
               <IconPlayPause data-type="pause" />
-              <div>Вернуться назад</div>
+              <div style={{ minWidth: "max-content" }}>Вернуться назад</div>
             </>
           )}
         </PrimaryBtn>
