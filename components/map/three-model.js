@@ -92,38 +92,65 @@ const handleCustomLayer = ({
           if (name === "lightred") color = 0xe76f6f;
           if (name === "darkred") color = 0xe7343a;
 
-          var material = new THREE.ShaderMaterial({
-            uniforms: {
-              color1: {
-                value: new THREE.Color("white"),
-              },
-              color2: {
-                value: new THREE.Color(0x8f00ff),
-              },
-            },
+          let material;
+
+          const materialProps = {
             vertexShader: `
-              varying vec2 vUv;
-          
-              void main() {
-                vUv = uv;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-              }
-            `,
-            fragmentShader: `
-              uniform vec3 color1;
-              uniform vec3 color2;
+                varying vec2 vUv;
             
-              varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+                }
+              `,
+            fragmentShader: `
+                uniform vec3 color1;
+                uniform vec3 color2;
               
-              void main() {
+                varying vec2 vUv;
                 
-                gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-              }
-            `,
+                void main() {
+                  
+                  gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+                }
+              `,
             wireframe: false,
             transparent: true,
-            opacity: .6
-          });
+            side: THREE.DoubleSide,
+            opacity: 0.6,
+          };
+
+          if (name === "field") {
+            material = new THREE.ShaderMaterial({
+              uniforms: {
+                color1: {
+                  value: new THREE.Color(0xFFBF4A),
+                },
+                color2: {
+                  value: new THREE.Color(0x79C7C2),
+                },
+              },
+              ...materialProps,
+            });
+          } else if (name === "buildings") {
+            material = new THREE.MeshStandardMaterial({
+              color: 0xFF5530,
+              transparent: true,
+              opacity: 0.6,
+            });
+          } else {
+            material = new THREE.ShaderMaterial({
+              uniforms: {
+                color1: {
+                  value: new THREE.Color(0xFFBF4A),
+                },
+                color2: {
+                  value: new THREE.Color(0x8f00ff),
+                },
+              },
+              ...materialProps,
+            });
+          }
 
           child.material = material; /*new THREE.MeshStandardMaterial({
             color: color,

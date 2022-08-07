@@ -8,10 +8,27 @@ import handleCustomLayer from "./three-model";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import Animation from "./animation";
 
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 const WhiteScreen = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: white;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ColorOverlay = styled.div`
+  pointer-events: none;
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -45,9 +62,51 @@ const StatusBox = styled.div`
   }
 `;
 
+const PrimaryBtn = styled.div`
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 35px 45px;
+  font-size: 22px;
+  font-weight: 500;
+  z-index: 40;
+  color: white;
+  border-radius: 15px;
+  background: #4a00e4;
+  cursor: pointer;
+
+  &&,
+  & * {
+    color: white;
+  }
+
+  display: flex;
+  align-items: center;
+
+  && > * + * {
+    margin-left: 10px;
+  }
+`;
+
+const IconPlayPause = styled.div`
+  width: 20px;
+  height: 20px;
+
+  &[data-type="play"] {
+    background: url("/icons/play.svg");
+    background-size: cover;
+  }
+
+  &[data-type="pause"] {
+    background: url("/icons/pause.svg");
+    background-size: cover;
+  }
+`;
+
 const customLayers = [
   {
-    url: "/models/castle23.gltf",
+    url: "/models/castle31.gltf",
     scale: [100, 100, 100],
     mapPosition: [135.748214, 35.013913],
     rotation: [0, -3, 0],
@@ -62,12 +121,13 @@ const customLayers = [
   },
 
   {
-    url: "/models/castle28.gltf",
+    url: "/models/castle30.gltf",
     scale: [120, 120, 120],
     mapPosition: [135.763465, 35.023085],
     rotation: [0, 0, 0],
     id: "castle 27",
   },
+
   {
     url: "/models/imperialtext1.gltf",
     scale: [80, 80, 80],
@@ -119,6 +179,8 @@ const Map = () => {
         }
       }
 
+      /* 3D layers */
+
       map.addLayer({
         id: "add-3d-buildings",
         source: "composite",
@@ -154,32 +216,61 @@ const Map = () => {
     };
   }, []);
 
+  const [animationKey, setAnimationKey] = useState(uuidv4());
+  const [animationOn, setAnimationOn] = useState(false);
+
   return (
     <>
+      {/* <ColorOverlay /> */}
+
       {!mapStyled && (
-        <WhiteScreen>
-          <StatusBox>
-            <Spin
-              indicator={
-                <LoadingOutlined
-                  style={{
-                    fontSize: 48,
-                    color: "white",
-                  }}
-                  spin
-                />
-              }
-            />
-            <div>Map is loading</div>
-          </StatusBox>
-        </WhiteScreen>
+        <>
+          <WhiteScreen>
+            <StatusBox>
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    style={{
+                      fontSize: 48,
+                      color: "white",
+                    }}
+                    spin
+                  />
+                }
+              />
+              <div>Map is loading</div>
+            </StatusBox>
+          </WhiteScreen>
+        </>
+      )}
+
+      {mapStyled && (
+        <PrimaryBtn
+          onClick={() => {
+            setAnimationKey(uuidv4());
+            setAnimationOn((state) => !state);
+          }}
+        >
+          {!animationOn ? (
+            <>
+              <IconPlayPause data-type="play" />
+              <div>Анимировать маршрут</div>
+            </>
+          ) : (
+            <>
+              <IconPlayPause data-type="pause" />
+              <div>Вернуться назад</div>
+            </>
+          )}
+        </PrimaryBtn>
       )}
 
       <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}>
-        {map && mapLoaded && (
+        {map && mapLoaded && mapStyled && (
           <>
+            {animationOn && <Animation key={`${animationKey}`} map={map} />}
             {<RenderMarker map={map} />}
-            {<LinePath map={map} /> }
+            {<LinePath map={map} />}
           </>
         )}
       </div>
