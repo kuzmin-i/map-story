@@ -15,7 +15,12 @@ const WhiteScreen = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  background: white;
+  background: linear-gradient(
+    61.59deg,
+    rgba(119, 116, 255, 0.5) 0%,
+    rgba(230, 255, 133, 0.5) 50.52%,
+    rgba(231, 145, 219, 0.5) 100%
+  );
   z-index: 999;
 
   display: flex;
@@ -26,16 +31,17 @@ const WhiteScreen = styled.div`
 const StatusBox = styled.div`
   width: 120px;
   height: 120px;
-  background: #766ff6;
+  background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
   border-radius: 10px;
+  border: 1px solid black;
 
   && * {
-    color: white;
+    color: black;
   }
 
   && > * + * {
@@ -126,7 +132,7 @@ const Map = ({ showPins }) => {
                   <LoadingOutlined
                     style={{
                       fontSize: 32,
-                      color: "white",
+                      color: "black",
                     }}
                     spin
                   />

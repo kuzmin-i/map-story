@@ -12,7 +12,9 @@ const MyPin = () => {
   const [showPins, setShowPins] = useState(false);
 
   useEffect(() => {
-    if (tgLoaded) {
+    if (tgLoaded && window.Telegram) {
+      const webapp = window.Telegram.WebApp;
+
       webapp.expand();
     }
   }, [tgLoaded]);
