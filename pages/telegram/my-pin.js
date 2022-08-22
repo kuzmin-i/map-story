@@ -9,13 +9,17 @@ const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
-  const [showPins, setShowPins] = useState(true);
+  const [showPins, setShowPins] = useState(false);
+
+  useEffect(() => {
+    if (tgLoaded) {
+      webapp.expand();
+    }
+  }, [tgLoaded]);
 
   useEffect(() => {
     if (window.Telegram && tgLoaded) {
       const webapp = window.Telegram.WebApp;
-
-      webapp.expand();
 
       const mainbutton = webapp.MainButton;
 
