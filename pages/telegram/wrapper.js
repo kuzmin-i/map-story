@@ -44,18 +44,27 @@ const TelegramWrapper = ({ children, type, state, fullscreen }) => {
   }, [tgLoaded, useFishMeta, fullscreen]);
 
   useEffect(() => {
-    if (window.Telegram && type === "interests") {
-      const webapp = window.Telegram.WebApp;
+    if (tgLoaded) {
+      console.log("sdfsdf");
 
-      const mainbutton = webapp.MainButton;
+      if (window.Telegram && type === "interests") {
+        const webapp = window.Telegram.WebApp;
 
-      if (typeof state === "number") {
-        mainbutton.setText("Подтвердить");
-      } else {
-        mainbutton.setText("не работает");
+        const mainbutton = webapp.MainButton;
+        mainbutton.isVisible = true;
+
+        console.log("mainbutton", mainbutton);
+
+        if (typeof state === "number") {
+          console.log("state", state);
+          mainbutton.setText("Подтвердить");
+        } else {
+          console.log("не работае");
+          mainbutton.setText("не работает");
+        }
       }
     }
-  }, [state, type]);
+  }, [state, type, tgLoaded]);
 
   return (
     <>
