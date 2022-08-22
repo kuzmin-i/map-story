@@ -63,8 +63,13 @@ Circle.Inner = styled.div`
   position: relative;
   width: 100%;
   padding-bottom: 100%;
-  background: grey;
+  background-color: lightgrey;
   border-radius: 50%;
+
+  background-image: ${({ index }) =>
+    typeof index === "number" ? `url("/interests/${index}.png")` : `url()`};
+  background-size: cover;
+  background-position: center;
 `;
 
 const Title = styled(Text)`
@@ -140,7 +145,7 @@ const Interests = () => {
             >
               <Item.Flex>
                 <Circle>
-                  <Circle.Inner />
+                  <Circle.Inner index={i} />
                 </Circle>
 
                 <Title>{title}</Title>

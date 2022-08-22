@@ -56,11 +56,14 @@ const TelegramWrapper = ({ children, type, state, fullscreen }) => {
         console.log("mainbutton", mainbutton);
 
         if (typeof state === "number") {
-          console.log("state", state);
-          mainbutton.setText("Подтвердить");
+          mainbutton.setParams({
+            is_visible: false,
+            text: "Подтвердить",
+            color: "#766FF6",
+          });
         } else {
           console.log("не работае");
-          mainbutton.setText("не работает");
+          mainbutton.setParams({ is_visible: false });
         }
       }
     }
