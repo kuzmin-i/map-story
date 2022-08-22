@@ -6,6 +6,11 @@ import TelegramWrapper from "./wrapper";
 import { Typography, Row } from "antd";
 const { Text } = Typography;
 
+export const Wrapper = styled.div`
+  padding: 15px;
+  padding-top: 24px;
+`;
+
 const colors = {
   black: "#313131",
 };
@@ -154,38 +159,40 @@ const Interests = () => {
   }, [selCard, tgLoaded]);
 
   return (
-    <TelegramWrapper type="interests" state={selCard}>
+    <>
       <Script
         src="https://telegram.org/js/telegram-web-app.js"
         onLoad={() => setTgLoaded(true)}
       ></Script>
 
-      <Row justify="center">
-        <SectionTitle>Что вам интересно?</SectionTitle>
-      </Row>
+      <Wrapper type="interests" state={selCard}>
+        <Row justify="center">
+          <SectionTitle>Что вам интересно?</SectionTitle>
+        </Row>
 
-      <Grid>
-        {cards.map((props, i) => {
-          const { title } = props;
+        <Grid>
+          {cards.map((props, i) => {
+            const { title } = props;
 
-          return (
-            <Item
-              selected={i === selCard}
-              key={`card:${i}`}
-              onClick={() => handleClick(i)}
-            >
-              <Item.Flex>
-                <Circle>
-                  <Circle.Inner index={i} />
-                </Circle>
+            return (
+              <Item
+                selected={i === selCard}
+                key={`card:${i}`}
+                onClick={() => handleClick(i)}
+              >
+                <Item.Flex>
+                  <Circle>
+                    <Circle.Inner index={i} />
+                  </Circle>
 
-                <Title>{title}</Title>
-              </Item.Flex>
-            </Item>
-          );
-        })}
-      </Grid>
-    </TelegramWrapper>
+                  <Title>{title}</Title>
+                </Item.Flex>
+              </Item>
+            );
+          })}
+        </Grid>
+      </Wrapper>
+    </>
   );
 };
 

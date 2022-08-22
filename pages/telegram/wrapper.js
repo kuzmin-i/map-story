@@ -5,6 +5,11 @@ import styled from "styled-components";
 import Script from "next/script";
 import Router from "next/router";
 
+export const Wrapper = styled.div`
+  padding: 15px;
+  padding-top: 24px;
+`;
+
 const TelegramWrapper = ({ children, type, state, fullscreen }) => {
   const [tgLoaded, setTgLoaded] = useState(false);
   const [user_id, setUser_id] = useState(null);
@@ -12,11 +17,6 @@ const TelegramWrapper = ({ children, type, state, fullscreen }) => {
   const [last_name, setLast_name] = useState(null);
 
   const useFishMeta = false;
-
-  const Wrapper = styled.div`
-    padding: 15px;
-    padding-top: 24px;
-  `;
 
   useEffect(() => {
     if (tgLoaded) {
