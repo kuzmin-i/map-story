@@ -11,7 +11,7 @@ const RenderMarker = ({ map }) => {
 
   const [markersAdded, setMarkersAdded] = useState(false);
 
-  const random_markers_count = 30;
+  const random_markers_count = 50;
   const random_markers_ref = useRef([]);
 
   useEffect(() => {

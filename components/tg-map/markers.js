@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { useEffect } from "react";
 
-import Marker from "../map/markers/test-marker";
-import DefaultMarker from "../map/markers/marker";
+import Marker from "./anim-marker";
+import DefaultMarker from "./default-marker";
 
 import points_positions from "../map/markers/data1.json";
 
@@ -32,15 +32,10 @@ const Markers = ({ map }) => {
 
         /* Marker 0 */
         new mapboxgl.Marker(markerElement_0, { offset: [0, -60] })
-          .setLngLat([135.758949, 35.024473])
+          .setLngLat([135.763096, 35.019058])
           .addTo(map);
 
-        /* Marker 1 */
-        const markerElement_1 = markerStartRef.current;
-
-        new mapboxgl.Marker(markerElement_1, { offset: [0, -60] })
-          .setLngLat([135.751996, 35.012765])
-          .addTo(map);
+       
 
         /* randomMarkers */
         const s0 = [135.743556, 35.0341];
@@ -92,10 +87,6 @@ const Markers = ({ map }) => {
           </div>
         );
       })}
-
-      <div ref={markerStartRef}>
-        <Marker noAnimation />
-      </div>
 
       {
         <div ref={markerRef}>
