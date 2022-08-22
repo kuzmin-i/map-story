@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import Markers from "./markers";
 
 const WhiteScreen = styled.div`
   width: 100vw;
@@ -92,10 +93,6 @@ const Map = () => {
         minzoom: 15,
         paint: {
           "fill-extrusion-color": "#FCC8E7",
-
-          // Use an 'interpolate' expression to
-          // add a smooth transition effect to
-          // the buildings as the user zooms in.
           "fill-extrusion-height": [
             "interpolate",
             ["linear"],
@@ -135,13 +132,17 @@ const Map = () => {
                   />
                 }
               />
-              <div style={{ fontSize: "12px" }}>Загружается карта</div>
+              <div style={{ fontSize: "12px", textAlign: "center" }}>
+                Загружается карта
+              </div>
             </StatusBox>
           </WhiteScreen>
         </>
       )}
 
-      <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}></div>
+      <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}>
+        {map && mapLoaded && mapStyled && <>{<Markers map={map} />}</>}
+      </div>
     </>
   );
 };
