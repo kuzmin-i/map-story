@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Script from "next/script";
 import TelegramWrapper from "./wrapper";
 
 import { Typography, Row } from "antd";
@@ -90,6 +91,7 @@ const SectionTitle = styled(Text)`
 
 const Interests = () => {
   const [selCard, setSelCard] = useState(null);
+  const [tgLoaded, setTgLoaded] = useState(false);
 
   const cards = [
     {
@@ -127,8 +129,37 @@ const Interests = () => {
     });
   };
 
+  useEffect(() => {
+    console.log("window.Telegram", window.Telegram);
+
+    if (window.Telegram && tgLoaded) {
+      const webapp = window.Telegram.WebApp;
+
+      const mainbutton = webapp.MainButton;
+      mainbutton.isVisible = true;
+
+      console.log("mainbutton", mainbutton);
+
+      if (typeof selCard === "number") {
+        mainbutton.setParams({
+          is_visible: false,
+          text: "Подтвердить",
+          color: "#766FF6",
+        });
+      } else {
+        console.log("не работае");
+        mainbutton.setParams({ is_visible: false });
+      }
+    }
+  }, [selCard, tgLoaded]);
+
   return (
     <TelegramWrapper type="interests" state={selCard}>
+      <Script
+        src="https://telegram.org/js/telegram-web-app.js"
+        onLoad={() => setTgLoaded(true)}
+      ></Script>
+
       <Row justify="center">
         <SectionTitle>Что вам интересно?</SectionTitle>
       </Row>

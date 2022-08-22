@@ -43,32 +43,6 @@ const TelegramWrapper = ({ children, type, state, fullscreen }) => {
     }
   }, [tgLoaded, useFishMeta, fullscreen]);
 
-  useEffect(() => {
-    if (tgLoaded) {
-      console.log("sdfsdf");
-
-      if (window.Telegram && type === "interests") {
-        const webapp = window.Telegram.WebApp;
-
-        const mainbutton = webapp.MainButton;
-        mainbutton.isVisible = true;
-
-        console.log("mainbutton", mainbutton);
-
-        if (typeof state === "number") {
-          mainbutton.setParams({
-            is_visible: false,
-            text: "Подтвердить",
-            color: "#766FF6",
-          });
-        } else {
-          console.log("не работае");
-          mainbutton.setParams({ is_visible: false });
-        }
-      }
-    }
-  }, [state, type, tgLoaded]);
-
   return (
     <>
       <Script
@@ -76,7 +50,7 @@ const TelegramWrapper = ({ children, type, state, fullscreen }) => {
         onLoad={() => setTgLoaded(true)}
       ></Script>
 
-      <Wrapper>{children}</Wrapper>
+      {tgLoaded && <Wrapper>{children}</Wrapper>}
     </>
   );
 };
