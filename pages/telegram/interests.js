@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Script from "next/script";
 import TelegramWrapper from "./wrapper";
 
-import { Typography, Row } from "antd";
+import { Typography, Row, Skeleton } from "antd";
 const { Text } = Typography;
 
 export const Wrapper = styled.div`
@@ -20,6 +20,23 @@ const Grid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 10px;
   row-gap: 10px;
+`;
+
+const WireItem = styled(Skeleton.Input)`
+  position: relative;
+  width: 100%;
+  padding-bottom: 123%;
+
+  overflow: hidden;
+  border-radius: 10px;
+  opacity: 0.7;
+
+  && > * {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-width: auto;
+  }
 `;
 
 const Item = styled.div`
@@ -97,6 +114,7 @@ const SectionTitle = styled(Text)`
 const Interests = () => {
   const [selCard, setSelCard] = useState(null);
   const [tgLoaded, setTgLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const cards = [
     {
@@ -135,15 +153,22 @@ const Interests = () => {
   };
 
   useEffect(() => {
-    console.log("window.Telegram", window.Telegram);
+    if (tgLoaded) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1500);
 
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [tgLoaded]);
+
+  useEffect(() => {
     if (window.Telegram && tgLoaded) {
       const webapp = window.Telegram.WebApp;
 
       const mainbutton = webapp.MainButton;
-      mainbutton.isVisible = true;
-
-      console.log("mainbutton", mainbutton);
 
       if (typeof selCard === "number") {
         mainbutton.setParams({
@@ -151,8 +176,11 @@ const Interests = () => {
           text: "Подтвердить",
           color: "#766FF6",
         });
+
+        mainbutton.onClick(() => {
+          webapp.close();
+        });
       } else {
-        alert("not wroing");
         mainbutton.setParams({ is_visible: false });
       }
     }
@@ -171,25 +199,33 @@ const Interests = () => {
         </Row>
 
         <Grid>
-          {cards.map((props, i) => {
-            const { title } = props;
+          {loading &&
+            Array(12)
+              .fill(1)
+              .map((_, i) => {
+                return <WireItem active key={`wireItem:${i}`} />;
+              })}
 
-            return (
-              <Item
-                selected={i === selCard}
-                key={`card:${i}`}
-                onClick={() => handleClick(i)}
-              >
-                <Item.Flex>
-                  <Circle>
-                    <Circle.Inner index={i} />
-                  </Circle>
+          {!loading &&
+            cards.map((props, i) => {
+              const { title } = props;
 
-                  <Title>{title}</Title>
-                </Item.Flex>
-              </Item>
-            );
-          })}
+              return (
+                <Item
+                  selected={i === selCard}
+                  key={`card:${i}`}
+                  onClick={() => handleClick(i)}
+                >
+                  <Item.Flex>
+                    <Circle>
+                      <Circle.Inner index={i} />
+                    </Circle>
+
+                    <Title>{title}</Title>
+                  </Item.Flex>
+                </Item>
+              );
+            })}
         </Grid>
       </Wrapper>
     </>
