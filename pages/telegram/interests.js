@@ -147,12 +147,12 @@ const Interests = () => {
 
       if (typeof selCard === "number") {
         mainbutton.setParams({
-          is_visible: false,
+          is_visible: true,
           text: "Подтвердить",
           color: "#766FF6",
         });
       } else {
-        console.log("не работае");
+        alert("not wroing");
         mainbutton.setParams({ is_visible: false });
       }
     }
