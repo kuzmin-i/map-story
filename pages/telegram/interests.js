@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Script from "next/script";
-import TelegramWrapper from "./wrapper";
 
 import { Typography, Row, Skeleton } from "antd";
 const { Text } = Typography;
