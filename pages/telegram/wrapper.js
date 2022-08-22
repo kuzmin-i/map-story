@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Script from "next/script";
 import Router from "next/router";
 
-const TelegramWrapper = ({ children }) => {
+const TelegramWrapper = ({ children, type, state }) => {
   const [tgLoaded, setTgLoaded] = useState(false);
   const [user_id, setUser_id] = useState(null);
   const [first_name, setFirst_name] = useState(null);
@@ -40,6 +40,20 @@ const TelegramWrapper = ({ children }) => {
       }
     }
   }, [tgLoaded, useFishMeta]);
+
+  useEffect(() => {
+    if (window.Telegram && type === "interests") {
+      const webapp = window.Telegram.WebApp;
+
+      const mainbutton = webapp.MainButton;
+
+      if (typeof state === "number") {
+        mainbutton.setText("Подтвердить");
+      } else {
+        mainbutton.setText("не работает");
+      }
+    }
+  }, [state, type]);
 
   return (
     <>

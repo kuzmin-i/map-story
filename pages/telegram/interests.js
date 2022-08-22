@@ -122,22 +122,8 @@ const Interests = () => {
     });
   };
 
-  useEffect(() => {
-    if (window.Telegram) {
-      const webapp = window.Telegram.WebApp;
-
-      const mainbutton = webapp.MainButton;
-
-      if (typeof selCard === "number") {
-        mainbutton.setText("Подтвердить");
-      } else {
-        mainbutton.setText("не работает");
-      }
-    }
-  }, [selCard]);
-
   return (
-    <TelegramWrapper>
+    <TelegramWrapper type="interests" state={selCard}>
       <Row justify="center">
         <SectionTitle>Что вам интересно?</SectionTitle>
       </Row>
