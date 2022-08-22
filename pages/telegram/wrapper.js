@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Script from "next/script";
 import Router from "next/router";
 
-const TelegramWrapper = ({ children, type, state }) => {
+const TelegramWrapper = ({ children, type, state, fullscreen }) => {
   const [tgLoaded, setTgLoaded] = useState(false);
   const [user_id, setUser_id] = useState(null);
   const [first_name, setFirst_name] = useState(null);
@@ -27,7 +27,9 @@ const TelegramWrapper = ({ children, type, state }) => {
       const { user = {} } = initDataUnsafe;
       const { id, first_name, last_name } = user;
 
-      webapp.expand();
+      if (fullscreen) {
+        webapp.expand();
+      }
 
       if (!useFishMeta) {
         setUser_id(id);
@@ -39,7 +41,7 @@ const TelegramWrapper = ({ children, type, state }) => {
         setLast_name("Kuzmin");
       }
     }
-  }, [tgLoaded, useFishMeta]);
+  }, [tgLoaded, useFishMeta, fullscreen]);
 
   useEffect(() => {
     if (window.Telegram && type === "interests") {
