@@ -14,6 +14,8 @@ const MyPin = () => {
     if (window.Telegram && tgLoaded) {
       const webapp = window.Telegram.WebApp;
 
+      webapp.expand();
+
       const mainbutton = webapp.MainButton;
 
       if (false) {

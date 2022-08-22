@@ -23,15 +23,15 @@ const WhiteScreen = styled.div`
 `;
 
 const StatusBox = styled.div`
-  width: 150px;
-  height: 150px;
-  background: #0076ff;
+  width: 120px;
+  height: 120px;
+  background: #766ff6;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
 
   && * {
     color: white;
@@ -128,7 +128,7 @@ const Map = () => {
                 indicator={
                   <LoadingOutlined
                     style={{
-                      fontSize: 48,
+                      fontSize: 32,
                       color: "white",
                     }}
                     spin
