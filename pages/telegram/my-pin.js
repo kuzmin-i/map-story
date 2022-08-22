@@ -9,7 +9,7 @@ const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
-  const [showPins, setShowPins] = useState(false);
+  const [showPins, setShowPins] = useState(true);
 
   useEffect(() => {
     if (window.Telegram && tgLoaded) {
@@ -33,7 +33,7 @@ const MyPin = () => {
         mainbutton.setParams({ is_visible: false });
       }
     }
-  }, [tgLoaded, showPins]);
+  }, [tgLoaded, showPins, setShowPins]);
 
   return (
     <>
