@@ -9,6 +9,7 @@ const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
+  const [showPins, setShowPins] = useState(false);
 
   useEffect(() => {
     if (window.Telegram && tgLoaded) {
@@ -18,21 +19,21 @@ const MyPin = () => {
 
       const mainbutton = webapp.MainButton;
 
-      if (false) {
+      if (!showPins) {
         mainbutton.setParams({
           is_visible: true,
-          text: "Подтвердить",
+          text: "Показать все пины",
           color: "#766FF6",
         });
 
         mainbutton.onClick(() => {
-          webapp.close();
+          setShowPins(true);
         });
       } else {
         mainbutton.setParams({ is_visible: false });
       }
     }
-  }, [tgLoaded]);
+  }, [tgLoaded, showPins]);
 
   return (
     <>
@@ -42,7 +43,7 @@ const MyPin = () => {
       ></Script>
 
       <Wrapper>
-        <Map />
+        <Map showPins={showPins} />
       </Wrapper>
     </>
   );

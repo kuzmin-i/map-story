@@ -43,7 +43,7 @@ const StatusBox = styled.div`
   }
 `;
 
-const Map = () => {
+const Map = ({ showPins }) => {
   const [map, setMap] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapStyled, setMapStyled] = useState(false);
@@ -141,7 +141,9 @@ const Map = () => {
       )}
 
       <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}>
-        {map && mapLoaded && mapStyled && <>{<Markers map={map} />}</>}
+        {map && mapLoaded && mapStyled && (
+          <>{<Markers map={map} showPins={showPins} />}</>
+        )}
       </div>
     </>
   );

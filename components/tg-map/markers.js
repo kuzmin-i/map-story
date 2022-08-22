@@ -7,7 +7,7 @@ import DefaultMarker from "./default-marker";
 
 import points_positions from "../map/markers/data1.json";
 
-const Markers = ({ map }) => {
+const Markers = ({ map, showPins }) => {
   const markerRef = useRef();
   const markerStartRef = useRef();
 
@@ -34,8 +34,6 @@ const Markers = ({ map }) => {
         new mapboxgl.Marker(markerElement_0, { offset: [0, -60] })
           .setLngLat([135.763096, 35.019058])
           .addTo(map);
-
-       
 
         /* randomMarkers */
         const s0 = [135.743556, 35.0341];
@@ -75,18 +73,19 @@ const Markers = ({ map }) => {
 
   return (
     <>
-      {points_positions.map((item = {}, i) => {
-        const { type, emotion } = item;
+      {showPins &&
+        points_positions.map((item = {}, i) => {
+          const { type, emotion } = item;
 
-        return (
-          <div
-            key={`randomMarker::${i}`}
-            ref={(el) => (random_markers_ref.current[i] = el)}
-          >
-            <DefaultMarker {...{ type, emotion }} noAnimation />
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={`randomMarker::${i}`}
+              ref={(el) => (random_markers_ref.current[i] = el)}
+            >
+              <DefaultMarker {...{ type, emotion }} noAnimation />
+            </div>
+          );
+        })}
 
       {
         <div ref={markerRef}>
