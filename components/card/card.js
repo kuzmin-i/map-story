@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Typography, Row, Col } from "antd";
 import { colors } from "../../pages/telegram/interests";
+import { CloseOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -16,6 +17,16 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  transition: 0.8s ease-in-out;
+
+  &&[data-visible="visible"] {
+    opacity: 1;
+  }
+
+  &&[data-visible="hidden"] {
+    opacity: 0;
+  }
 `;
 
 const Preview = styled.div`
@@ -76,11 +87,54 @@ const Link = styled.div`
   }
 `;
 
-const Card = () => {
+const Close = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: ${colors.black};
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &&&,
+  && * {
+    color: white;
+  }
+`;
+
+const Card = ({ selPin, setSelPin = () => {} }) => {
+  const [isVisible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (typeof selPin === "number") {
+      const timer = setTimeout(() => {
+        setVisible(true);
+      }, 800);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [selPin]);
+
+  const handleClose = () => {
+    setSelPin(null);
+  };
+
+  if (!(typeof selPin === "number")) return <></>;
+
   return (
     <>
-      <Wrapper>
-        <Preview />
+      <Wrapper data-visible={isVisible ? "visible" : "hidden"}>
+        <Preview>
+          <Close onClick={handleClose}>
+            <CloseOutlined />
+          </Close>
+        </Preview>
 
         <Descr>
           <Row justify="space-between" style={{ marginBottom: "12px" }}>

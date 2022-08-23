@@ -10,7 +10,7 @@ const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
-  const [showPins, setShowPins] = useState(true);
+  const [showPins, setShowPins] = useState(false);
 
   const [selPin, setSelPin] = useState(null);
 
@@ -52,7 +52,7 @@ const MyPin = () => {
       ></Script>
 
       <Wrapper>
-        {selPin && <Card />}
+        {<Card {...{ selPin, setSelPin }} />}
 
         <Map showPins={showPins} {...{ selPin, setSelPin }} />
       </Wrapper>
