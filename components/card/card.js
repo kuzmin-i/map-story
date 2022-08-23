@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Typography, Row, Col } from "antd";
 import { colors } from "../../pages/telegram/interests";
 import { CloseOutlined } from "@ant-design/icons";
+import { v4 as uuidv4 } from "uuid";
 
 const { Text } = Typography;
 
@@ -17,6 +18,12 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  &&[data-size="fullsize"] {
+    height: 100%;
+    border-radius: 0 0 0px 0px;
+    overflow: scroll;
+  }
 
   transition: 0.8s ease-in-out;
 
@@ -41,6 +48,13 @@ const Preview = styled.div`
   background-position: center;
   position: relative;
   overflow: hidden;
+  transition: 0.3s ease-in-out;
+
+  &&[data-size="fullsize"] {
+    min-height: ${({ height }) => (height ? `${height}px` : "100%")};
+  }
+
+  min-height: 300px;
 `;
 
 const Descr = styled.div`
@@ -109,6 +123,12 @@ const Close = styled.div`
 
 const Card = ({ selPin, setSelPin = () => {} }) => {
   const [isVisible, setVisible] = useState(false);
+  const [key, setKey] = useState(uuidv4());
+
+  const prevRef = useRef();
+  const [divHeight, setDivHeight] = useState(0);
+
+  const [fullsize, setFullsize] = useState(false);
 
   useEffect(() => {
     if (typeof selPin === "number") {
@@ -116,24 +136,44 @@ const Card = ({ selPin, setSelPin = () => {} }) => {
         setVisible(true);
       }, 800);
 
+      setDivHeight(prevRef.current.clientHeight);
+
       return () => {
         clearTimeout(timer);
       };
     } else {
       setVisible(false);
+      setFullsize(false);
+      setKey(uuidv4());
     }
-  }, [selPin]);
+  }, [selPin, prevRef]);
 
   const handleClose = () => {
     setSelPin(null);
   };
 
+  const handleFull = () => {
+    setFullsize((state) => !state);
+  };
+
+  console.log("divHeight", divHeight);
+
+  
+
   if (!(typeof selPin === "number")) return <></>;
 
   return (
     <>
-      <Wrapper data-visible={isVisible ? "visible" : "hidden"}>
-        <Preview>
+      <Wrapper
+        data-size={fullsize ? "fullsize" : "mini"}
+        data-visible={isVisible ? "visible" : "hidden"}
+        key={key}
+      >
+        <Preview
+          ref={prevRef}
+          height={divHeight}
+          data-size={fullsize ? "fullsize" : "mini"}
+        >
           <Close onClick={handleClose}>
             <CloseOutlined />
           </Close>
@@ -153,14 +193,45 @@ const Card = ({ selPin, setSelPin = () => {} }) => {
           </Row>
 
           <Row justify="space-between" style={{ marginBottom: "12px" }}>
-            <Description>
-              Over 3,000 churches were built in Poland between 1945 and 1989,
-              1945 and 1989, 194...
-            </Description>
+            {fullsize && (
+              <Description>
+                Over 3,000 churches were built in Poland between 1945 and 1989,
+                despite the socialist state’s hostility towards religion. We
+                call this Day-VII Architecture. Built by parishioners using
+                materials that were scavenged or pinched, the churches were at
+                once an expression of faith and a form of anti-government
+                protest. Neither legal nor prohibited, the building of churches
+                in this period committed the most talented architects and
+                craftsmen, who in turn enabled parish communities to build their
+                own houses of worship. Hide
+                <br />
+                <br />
+                Over 3,000 churches were built in Poland between 1945 and 1989,
+                despite the socialist state’s hostility towards religion. We
+                call this Day-VII Architecture. Built by parishioners using
+                materials that were scavenged or pinched, the churches were at
+                once an expression of faith and a form of anti-government
+                protest. Neither legal nor prohibited, the building of churches
+                in this period committed the most talented architects and
+                craftsmen, who in turn enabled parish communities to build their
+                own houses of worship. Hide
+              </Description>
+            )}
+
+            {!fullsize && (
+              <Description>
+                Over 3,000 churches were built in Poland between 1945 and 1989,
+                1945 and 1989, 194...
+              </Description>
+            )}
           </Row>
 
           <Row justify="space-between" style={{ marginBottom: "12px" }}>
-            <Link>Read more</Link>
+            {!fullsize ? (
+              <Link onClick={handleFull}>Read more</Link>
+            ) : (
+              <Link onClick={handleFull}>Hide</Link>
+            )}
           </Row>
         </Descr>
       </Wrapper>

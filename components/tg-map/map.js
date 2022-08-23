@@ -82,6 +82,7 @@ const Map = ({ showPins, selPin, setSelPin }) => {
   const [mapStyled, setMapStyled] = useState(false);
 
   const [isSearching, setSearching] = useState(false);
+  const [wasSearched, setWasSearched] = useState(false);
 
   /* Идет поиск пинов */
   useEffect(() => {
@@ -94,6 +95,7 @@ const Map = ({ showPins, selPin, setSelPin }) => {
     if (isSearching) {
       const timer = setTimeout(() => {
         setSearching(false);
+        setWasSearched(true);
       }, [2500]);
 
       return () => {
@@ -171,7 +173,7 @@ const Map = ({ showPins, selPin, setSelPin }) => {
   }, []);
 
   useEffect(() => {
-    if (!isSearching && map) {
+    if (!isSearching && map && wasSearched) {
       map.flyTo({
         zoom: 14.5,
         center: [135.762, 35.017],
