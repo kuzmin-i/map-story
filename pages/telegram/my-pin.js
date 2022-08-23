@@ -10,7 +10,7 @@ const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
-  const [showPins, setShowPins] = useState(true);
+  const [showPins, setShowPins] = useState(false);
 
   const [selPin, setSelPin] = useState(null);
 
