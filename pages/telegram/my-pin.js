@@ -4,12 +4,15 @@ import Script from "next/script";
 
 import { Typography, Row, Skeleton } from "antd";
 import Map from "../../components/tg-map/map";
+import Card from "../../components/card/card";
 
 const Wrapper = styled.div``;
 
 const MyPin = () => {
   const [tgLoaded, setTgLoaded] = useState(false);
-  const [showPins, setShowPins] = useState(false);
+  const [showPins, setShowPins] = useState(true);
+
+  const [selPin, setSelPin] = useState(null);
 
   useEffect(() => {
     if (tgLoaded && window.Telegram) {
@@ -49,7 +52,9 @@ const MyPin = () => {
       ></Script>
 
       <Wrapper>
-        <Map showPins={showPins} />
+        {selPin && <Card />}
+
+        <Map showPins={showPins} {...{ selPin, setSelPin }} />
       </Wrapper>
     </>
   );

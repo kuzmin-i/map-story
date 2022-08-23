@@ -76,10 +76,32 @@ const Searcher = styled.div`
   display: flex;
 `;
 
-const Map = ({ showPins }) => {
+const Map = ({ showPins, selPin, setSelPin }) => {
   const [map, setMap] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapStyled, setMapStyled] = useState(false);
+
+  const [isSearching, setSearching] = useState(false);
+
+  /* Идет поиск пинов */
+  useEffect(() => {
+    if (showPins) {
+      setSearching(true);
+    }
+  }, [showPins]);
+
+  useEffect(() => {
+    if (isSearching) {
+      const timer = setTimeout(() => {
+        setSearching(false);
+      }, [2500]);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isSearching]);
+  /* */
 
   const mapRef = useRef();
 
@@ -173,7 +195,7 @@ const Map = ({ showPins }) => {
         </>
       )}
 
-      {showPins && (
+      {isSearching && (
         <Searcher>
           <Spin
             indicator={
@@ -193,7 +215,8 @@ const Map = ({ showPins }) => {
       <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}>
         {map && mapLoaded && mapStyled && (
           <>
-            {<Markers map={map} />} {showPins && <Markers1 map={map} />}
+            {<Markers map={map} />}{" "}
+            {showPins && <Markers1 map={map} {...{ selPin, setSelPin }} />}
           </>
         )}
       </div>

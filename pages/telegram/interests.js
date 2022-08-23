@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   padding-top: 24px;
 `;
 
-const colors = {
+export const colors = {
   black: "#313131",
 };
 
