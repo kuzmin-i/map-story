@@ -69,7 +69,7 @@ const Markers1 = ({ map, selPin, setSelPin }) => {
       const { points = [] } = selItem;
 
       map.flyTo({
-        center: [points[0], points[1] + 0.0021],
+        center: [points[0], points[1] + 0.0018],
         zoom: 17,
         essential: true,
       });
