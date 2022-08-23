@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import Markers from "./markers";
+import Markers1 from "./markers-1";
 
 const WhiteScreen = styled.div`
   width: 100vw;
@@ -47,6 +48,32 @@ const StatusBox = styled.div`
   && > * + * {
     margin-top: 16px;
   }
+`;
+
+const Searcher = styled.div`
+  position: fixed;
+  z-index: 10;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid black;
+
+  padding: 10px 10px;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+
+  display: flex;
+  && > * + * {
+    margin-left: 10px;
+  }
+
+  &&,
+  && * {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  display: flex;
 `;
 
 const Map = ({ showPins }) => {
@@ -146,9 +173,28 @@ const Map = ({ showPins }) => {
         </>
       )}
 
+      {showPins && (
+        <Searcher>
+          <Spin
+            indicator={
+              <LoadingOutlined
+                style={{
+                  fontSize: 18,
+                  color: "black",
+                }}
+                spin
+              />
+            }
+          />
+          <div>Идет поиск пинов...</div>
+        </Searcher>
+      )}
+
       <div ref={mapRef} style={{ width: "100vw", height: "100vh" }}>
         {map && mapLoaded && mapStyled && (
-          <>{<Markers map={map} showPins={showPins} />}</>
+          <>
+            {<Markers map={map} />} {showPins && <Markers1 map={map} />}
+          </>
         )}
       </div>
     </>
