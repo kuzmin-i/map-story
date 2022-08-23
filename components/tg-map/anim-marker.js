@@ -64,7 +64,9 @@ const Marker = ({ noAnimation, isMe }) => {
         <motion.div
           animate={{
             width: ["80px", "90px", "80px"],
-            height: ["85px", "90px", "85px"]
+            height: ["85px", "90px", "85px"],
+            marginLeft: ['0', '-5px', '0px'],
+            marginTop: ['0', '-10px', '0px']
           }}
           transition={{ repeat: Infinity, ease: "easeInOut", duration: 2 }}
           style={{

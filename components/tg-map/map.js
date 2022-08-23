@@ -170,6 +170,17 @@ const Map = ({ showPins, selPin, setSelPin }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isSearching && map) {
+      map.flyTo({
+        zoom: 14.5,
+        center: [135.762, 35.017],
+        pitch: 60,
+        essential: true,
+      });
+    }
+  }, [isSearching, map]);
+
   return (
     <>
       {!mapStyled && (

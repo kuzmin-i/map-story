@@ -50,7 +50,7 @@ const Markers1 = ({ map, selPin, setSelPin }) => {
 
           const { points = [] } = item;
 
-          new mapboxgl.Marker(localRef, { offset: [0, -60] })
+          new mapboxgl.Marker(localRef, { offset: [0, -30] })
             .setLngLat([...points])
             .addTo(map);
         });

@@ -7,7 +7,7 @@ import { CloseOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
 const Wrapper = styled.div`
-  height: calc(100% - 200px);
+  height: calc(100% - 100px);
   width: 100%;
   position: fixed;
   background: ${colors.black};
@@ -38,6 +38,7 @@ const Preview = styled.div`
     linear-gradient(180deg, #e791db 0%, #5c5ef9 100%);
   box-shadow: 0px -1px 17px 4px rgba(9, 10, 90, 0.08);
   background-size: cover;
+  background-position: center;
   position: relative;
   overflow: hidden;
 `;
@@ -118,6 +119,8 @@ const Card = ({ selPin, setSelPin = () => {} }) => {
       return () => {
         clearTimeout(timer);
       };
+    } else {
+      setVisible(false);
     }
   }, [selPin]);
 
